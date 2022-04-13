@@ -1,4 +1,7 @@
-# вариант 1 без генератора
+from itertools import zip_longest
+
+
+# вариант 1
 def timetable():
     for ind, tutor in enumerate(tutors):
         if ind + 1 > len(klasses):
@@ -6,7 +9,6 @@ def timetable():
         else:
             tupl = (tutor, klasses[tutors.index(tutor)])
         yield tupl
-
 
 
 tutors = [
@@ -17,9 +19,13 @@ klasses = [
     '9А', '7В', '9Б', '9В', '8Б', '10А', '10Б', '9А'
 ]
 
-rezult = timetable()
-print(*rezult)
+result = timetable()
+print(*result)
 
 # вариант 2
-rezult = ((tutor, None) if ind + 1 > len(klasses) else (tutor, klasses[tutors.index(tutor)]) for ind, tutor in enumerate(tutors))
-print(*rezult)
+result = ((tutor, None) if ind + 1 > len(klasses) else (tutor, klasses[tutors.index(tutor)]) for ind, tutor in enumerate(tutors))
+print(*result)
+
+#вариант 3
+print(*{i for i in zip_longest(tutors, klasses)})
+
