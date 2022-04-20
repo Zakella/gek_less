@@ -24,5 +24,5 @@ for root, dirs, files in os.walk(root_dir):
             file_dir = os.path.join(root, file)
             try:
                 shutil.copy(file_dir, dir_path)
-            except:
-                pass
+            except Exception:
+               pass
