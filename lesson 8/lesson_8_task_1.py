@@ -15,7 +15,7 @@ def email_parse(email):
 def parse_nginx():
 
     # разбиваю на блоки что бы можно было норм читать
-    ip_pattern = re.compile(r'(^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})')
+    ip_pattern = re.compile(r'^\S*')
     date_patern = re.compile(r'\[(.*)\]')
     request_pattern = re.compile(r'GET')
     response_pattern = re.compile(r'[^\d]\/\w+\/\w+')
