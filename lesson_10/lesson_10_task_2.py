@@ -26,10 +26,4 @@ class Suit(Clothes):
         return 2 * self.growth + 0.3
 
 
-new_coat = Coat(5).calculate
-print(new_coat)
-
-new_suit = Suit(15).calculate
-print(new_suit)
-
-print(new_coat + new_suit)
+print(Coat(5).calculate + Suit(15).calculate)
