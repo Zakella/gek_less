@@ -2,11 +2,14 @@ class MyDivZero(ZeroDivisionError):
     pass
 
 
-firt_int = input("Введите первое число:")
+first_int = input("Введите первое число:")
 sec_int = input("Введите второе  число:")
 
 try:
-    print(int(firt_int) / int(sec_int))
+    if int(sec_int) == 0:
+        raise MyDivZero
+
+    print(int(first_int) / int(sec_int))
 except ValueError:
     print("Не верный тип данных!")
 except MyDivZero:
