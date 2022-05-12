@@ -1,6 +1,7 @@
 class NotNumeric(Exception):
     pass
 
+
 new_list = []
 
 while True:

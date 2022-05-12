@@ -14,4 +14,3 @@ except ValueError:
     print("Не верный тип данных!")
 except MyDivZero:
     print("Нельзя делить на ноль!")
-
