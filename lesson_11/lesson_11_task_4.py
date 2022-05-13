@@ -3,6 +3,7 @@ import datetime
 
 class Storage:
     __open = False
+    __total_tech = []
 
     def __init__(self, name, location, max):
         self.__name = name
@@ -20,28 +21,52 @@ class Storage:
     def info(self, open=False):
         self.__open = open
 
+    def add_tech(self, tech):
+        self.__total_tech.append(tech)
 
-class Tech:
+    def show_leftovers(self, storage):
+        for item in self.__total_tech:
+            print(item)
 
-    def __init__(self, brand, warranty):
+
+class Equipment:
+
+    def __init__(self, brand):
         self.brand = brand
-        self.warranty = warranty
+
+    @staticmethod
+    def check_workability(tech_type):
+        if isinstance(tech_type, Printer):
+            result = input("Включите принтер. Он печатает? ")
+            if result == "yes":
+                return True
+            else:
+                raise "Нельзя добавлять на склад не работающую технику!"
 
 
-class Printer(Tech):
+class Printer(Equipment):
 
     def __init__(self, color, model, quant):
         self.color = color
         self.model = model
         self.quant = quant
 
+    def __str__(self):
+        return f'{self.model} color {self.color} total pieces {self.quant} '
 
-class Scanner(Tech):
-    pass
+
+class Scanner(Equipment):
+    def __init__(self, color, model, quant):
+        self.color = color
+        self.model = model
+        self.quant = quant
 
 
-class Xerox(Tech):
-    pass
+class Xerox(Equipment):
+    def __init__(self, color, model, quant):
+        self.color = color
+        self.model = model
+        self.quant = quant
 
 
 def open_storage():
@@ -59,14 +84,20 @@ def open_storage():
 
     if not main_storage.info.get("itsOpen"):
         print(f"Storage is closed! Open time in {open_time}")
-        exit()
+        exit(1)
 
-    canonA50 = Printer()
-    canonA50.brand = "Canon"
-    canonA50.warranty = 2
-    canonA50.color = "green"
-    canonA50.model = "A50X42"
-    canonA50.quant = 10
+    tech = Equipment("Canon")
+    canon_a50 = Printer("green", "A50X42", 1)
+    result = tech.check_workability(canon_a50)
+
+    if result:
+        main_storage.add_tech(canon_a50)
+
+    # canon_b60 = Printer("green", "B77", 1)
+
+
+    main_storage.show_leftovers(main_storage)
+        # print(main_storage.total_tech)
 
 
 if __name__ == "__main__":
