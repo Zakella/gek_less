@@ -1,5 +1,9 @@
 import datetime
 
+"""Программа октрывает склад в 9.00 и закрывает в 18.00. В него добаляется оргтехника, в конце дня мы считаем общее 
+количество добавленной техники на склад. Каждую технику нужно проверить на работоспособность прежде чем добавить на склад.
+"""
+
 
 class Storage:
     __open = False
@@ -58,6 +62,11 @@ class Equipment:
             result = input(f"Введите скорость сканирования модели {tech_type.model}:")
             if not result.isnumeric():
                 raise "Не верный ввод данных, должно быть число!"
+        elif isinstance(tech_type, Xerox):
+            paper_standards = ["A4", "A5", "A0", "A1"]
+            result = input(f"Укажите формат бумаги по умолчанию {tech_type.model}:")
+            if not result.upper() in paper_standards:
+                raise "Не верный формат бумаги!"
 
 
 class Printer(Equipment):
@@ -95,9 +104,12 @@ class Xerox(Equipment):
         self.amount = amount
         self.brand = brand
 
+    def __str__(self):
+        return f'Производитель {self.brand} , Модель:{self.model},цвет: {self.color},в количестве {self.amount} '
+
 
 def open_storage():
-    main_storage = Storage("Main", "NY, Park Lain 5", 4)
+    main_storage = Storage("Main", "NY, Park Lain 5", 15)
     now = datetime.datetime.now()
     currentdate = datetime.datetime.today()
     open_time = currentdate.combine(currentdate.date(), currentdate.min.time()) + datetime.timedelta(hours=9)
@@ -131,22 +143,18 @@ def open_storage():
     if result:
         main_storage.add_tech(scan_six1600)
 
+    tech_3 = Equipment("Xerox")
+    xerox_3025 = Xerox("белый", " Workcentre 3025", 2, tech_3.brand)
+    tech_3.check_workability(xerox_3025)
+    if result:
+        main_storage.add_tech(xerox_3025)
+
     main_storage.show_leftovers(main_storage)
     print(f"Всего на складе {main_storage}  оргтехники:{Equipment.amount} вида, из них:\n"
           f"Принтеров в количестве {Printer.amount} шт\n"
-          f"Сканеров в количестве {Scanner.amount} шт")
+          f"Сканеров в количестве {Printer.amount} шт\n"
+          f"Ксероксов в количестве {Xerox.amount} шт")
 
 
 if __name__ == "__main__":
     open_storage()
-
-    # class ExampleInstance:
-    #     instances_count = 0
-    #
-    #     def __init__(self):
-    #         ExampleInstance.instances_count += 1
-    #
-    #
-    # for _ in range(5):
-    #     _ = ExampleInstance()
-    # print("Количество экземпляров:", ExampleInstance.instances_count)
